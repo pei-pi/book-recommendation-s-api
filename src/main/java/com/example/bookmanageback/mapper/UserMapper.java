@@ -32,8 +32,6 @@ public interface UserMapper {
     @Update("update user set username=#{username},userPassword=#{userPassword},score=#{score} where userId = #{userId}")
     public int updataUser(User user);
 //批量删除
-//    @Delete("delete from user where userId in (#{userIds})")
-
     @Delete("<script>DELETE FROM user WHERE userId IN <foreach item='id' collection='userIds' open='(' separator=',' close=')'>#{id}</foreach></script>")
     public int delete(@Param("userIds") List<Integer> userIds);
 

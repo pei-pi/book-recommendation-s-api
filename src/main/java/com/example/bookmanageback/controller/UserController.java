@@ -59,18 +59,18 @@ public class UserController {
 
     @ApiOperation("删除用户")
     @DeleteMapping ("/deleteUserById")
-    public String deleteUser(int userId){
+    public Result deleteUser(int userId){
         int i = userMapper.deleteUserById(userId);
         if(i>0){
-            return "用户删除成功";
+            return Result.ok();
         } else {
-          return "用户删除失败";
+            return Result.error();
         }
     }
 
     @ApiOperation("添加用户")
     @PostMapping("/insertUser")
-    public Result insertUser(User user){
+    public Result insertUser(@RequestBody User user){
 //        System.out.println(user);
         int i = userMapper.insertUser(user);
         if(i>0){
@@ -82,12 +82,12 @@ public class UserController {
 
     @ApiOperation("更新用户信息")
     @PostMapping("/updateUser")
-    public String updateUser(User user){
+    public Result updateUser(@RequestBody User user){
         int i = userMapper.updataUser(user);
         if(i>0){
-            return "用户更新成功";
+            return Result.ok();
         }else{
-            return "用户更新失败";
+            return Result.error();
         }
     }
 
@@ -100,14 +100,13 @@ public class UserController {
 
     @ApiOperation("批量删除用户")
     @DeleteMapping  ("/delete")
-    public String delete(@RequestBody List<Integer> userIds){
-
+    public Result delete(@RequestBody List<Integer> userIds){
         System.out.println(userIds);
         int i = userMapper.delete(userIds);
         if(i>0){
-            return "批量删除成功";
+            return Result.ok();
         }else{
-            return "批量删除失败";
+            return Result.error();
         }
     }
 
