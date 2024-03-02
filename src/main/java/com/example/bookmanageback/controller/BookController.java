@@ -62,4 +62,14 @@ public class BookController {
             return Result.error();
         }
     }
+    @ApiOperation("更新图书信息")
+    @PostMapping("/updataBook")
+    public Result updateBook(@RequestBody Book book){
+        int i = bookMapper.updataBook(book);
+        if(i>0){
+            return Result.ok();
+        }else{
+            return Result.error();
+        }
+    }
 }
