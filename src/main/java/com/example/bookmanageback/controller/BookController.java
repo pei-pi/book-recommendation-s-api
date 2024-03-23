@@ -81,4 +81,11 @@ public class BookController {
         List<Map<Integer,String>> classify = bookMapper.inquiryClassify();
         return Result.ok().data("classify",classify);
     }
+
+    @ApiOperation("查询图书详细分类")
+    @GetMapping("inquiryDetailClassify")
+    public Result inquiryDetailClassify(){
+        List<Map<Integer,String>> detailClassify = bookMapper.inquiryDetailClassify();
+        return Result.ok().data("detailClassify",detailClassify);
+    }
 }
