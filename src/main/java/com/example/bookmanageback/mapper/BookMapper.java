@@ -1,11 +1,12 @@
 package com.example.bookmanageback.mapper;
 
 import com.example.bookmanageback.entity.Book;
-import com.example.bookmanageback.entity.User;
+import com.example.bookmanageback.entity.Category;
 import org.apache.ibatis.annotations.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Transactional
@@ -28,8 +29,10 @@ public interface BookMapper {
     // 批量删除图书
     @Delete("<script>DELETE FROM books WHERE id IN <foreach item='id' collection='bookIds' open='(' separator=',' close=')'>#{id}</foreach></script>")
     public int bantchDelete(@Param("bookIds") List<Integer> bookIds);
-    // 编辑图书
+    //  编辑图书
     @Update("update books set bookTitle=#{bookTitle},bookAuthor=#{bookAuthor},bookTags=#{bookTags},bookContent=#{bookContent},bookSrc=#{bookSrc},bookCategory=#{bookCategory},bookDetailCategory=#{bookDetailCategory},store=#{store} where id = #{id}")
     public int updataBook(Book book);
-
+    //  查询分类
+    @Select("select cateID,cateName from category group by cateID,cateName")
+    public List<Map<Integer,String>> inquiryClassify();
 }

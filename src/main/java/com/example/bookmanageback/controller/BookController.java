@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/book")
 @RestController
@@ -19,6 +20,7 @@ public class BookController {
         return Result.ok().data("books",book);
     }
 
+    @ApiOperation("根据id查找书籍")
     @GetMapping("/getBookById")
     public Book getBookById(int bookId){
         Book book = bookMapper.findById(bookId);
@@ -71,5 +73,12 @@ public class BookController {
         }else{
             return Result.error();
         }
+    }
+
+    @ApiOperation("查询图书分类")
+    @GetMapping("inquiryClassify")
+    public Result inquiryClassify(){
+        List<Map<Integer,String>> classify = bookMapper.inquiryClassify();
+        return Result.ok().data("classify",classify);
     }
 }
