@@ -37,6 +37,6 @@ public interface BookMapper {
     public List<Map<Integer,String>> inquiryClassify();
 
     //  查询详细分类
-    @Select("select cateId,subCateID,subCateName from category")
-    public List<Map<Integer,String>> inquiryDetailClassify();
+    @Select("select cateId,subCateID,subCateName from category where cateId=#{cateId}")
+    public List<Map<Integer,String>> inquiryDetailClassify(Integer cateId);
 }

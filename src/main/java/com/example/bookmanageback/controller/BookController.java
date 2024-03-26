@@ -84,8 +84,8 @@ public class BookController {
 
     @ApiOperation("查询图书详细分类")
     @GetMapping("inquiryDetailClassify")
-    public Result inquiryDetailClassify(){
-        List<Map<Integer,String>> detailClassify = bookMapper.inquiryDetailClassify();
+    public Result inquiryDetailClassify(int cateId){
+        List<Map<Integer,String>> detailClassify = bookMapper.inquiryDetailClassify(cateId);
         return Result.ok().data("detailClassify",detailClassify);
     }
 }
