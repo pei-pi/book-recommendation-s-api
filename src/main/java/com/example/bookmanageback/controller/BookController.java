@@ -88,4 +88,15 @@ public class BookController {
         List<Map<Integer,String>> detailClassify = bookMapper.inquiryDetailClassify(cateId);
         return Result.ok().data("detailClassify",detailClassify);
     }
+
+    @ApiOperation("添加图书")
+    @PostMapping("/addBook")
+    public Result addBook(@RequestBody Book book){
+        int i = bookMapper.addBook(book);
+        if(i>0){
+            return Result.ok();
+        }else{
+            return Result.error();
+        }
+    }
 }

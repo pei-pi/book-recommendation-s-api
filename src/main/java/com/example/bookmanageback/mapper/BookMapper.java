@@ -39,4 +39,7 @@ public interface BookMapper {
     //  查询详细分类
     @Select("select cateId,subCateID,subCateName from category where cateId=#{cateId}")
     public List<Map<Integer,String>> inquiryDetailClassify(Integer cateId);
+
+    @Insert("insert into books (bookTitle,bookAuthor,bookTags,bookContent,bookSrc,bookCategory,bookDetailCategory,store) VALUES (#{bookTitle}, #{bookAuthor}, #{bookTags}, #{bookContent}, #{bookSrc} ,#{bookCategory}, #{bookDetailCategory}, #{store})")
+    public int addBook(Book book);
 }
