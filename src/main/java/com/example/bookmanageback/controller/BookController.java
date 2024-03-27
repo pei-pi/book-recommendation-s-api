@@ -30,16 +30,16 @@ public class BookController {
 
     @ApiOperation("查询图书数目")
     @GetMapping("/getBooksCount")
-    public int getCount(){
+    public Result getCount(){
         int sum = bookMapper.getCount();
-        return sum;
+        return Result.ok().data("sum",sum);
     }
 
     @ApiOperation("查询借阅中的图书数量")
     @GetMapping("/getBorrowBooksCount")
-    public int getBorrowCount(){
+    public Result getBorrowCount(){
         int count = bookMapper.getBorrowCount();
-        return count;
+        return Result.ok().data("count",count);
     }
 
     @ApiOperation("删除图书")

@@ -21,7 +21,7 @@ public interface BookMapper {
     public int getCount();
 
     //查询借阅中的图书数量
-    @Select("select Count(*) from borrowBooks where state=0")
+    @Select("select Count(*) from borrowBooks where return_state=0")
     public int getBorrowCount();
     // 删除图书
     @Delete("delete from books where id = #{bookId}" )
@@ -42,4 +42,6 @@ public interface BookMapper {
 
     @Insert("insert into books (bookTitle,bookAuthor,bookTags,bookContent,bookSrc,bookCategory,bookDetailCategory,store) VALUES (#{bookTitle}, #{bookAuthor}, #{bookTags}, #{bookContent}, #{bookSrc} ,#{bookCategory}, #{bookDetailCategory}, #{store})")
     public int addBook(Book book);
+    
+
 }

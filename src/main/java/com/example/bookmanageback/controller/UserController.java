@@ -44,9 +44,9 @@ public class UserController {
 
     @ApiOperation("查询用户数量")
     @GetMapping("/userCount")
-    public int getUserCount(){
+    public Result getUserCount(){
         int count = userMapper.getUserCount();
-        return count;
+        return Result.ok().data("count",count);
     }
 
     @ApiOperation("查询所有用户")
