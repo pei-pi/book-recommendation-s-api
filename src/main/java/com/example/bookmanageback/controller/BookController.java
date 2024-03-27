@@ -2,10 +2,12 @@ package com.example.bookmanageback.controller;
 import com.example.bookmanageback.entity.Book;
 import com.example.bookmanageback.mapper.BookMapper;
 import com.example.bookmanageback.utils.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.sound.midi.SysexMessage;
 import java.util.List;
 import java.util.Map;
 
@@ -98,5 +100,16 @@ public class BookController {
         }else{
             return Result.error();
         }
+    }
+
+    @ApiOperation("统计图表")
+    @GetMapping("/charts")
+    public Result charts(){
+        List<Map<Integer,String>> classify = bookMapper.inquiryClassify();
+        for(Map item : classify){
+            int num = bookMapper.searchCateNum((String) item.get("cateName"));
+            item.put("num",num);
+        }
+        return Result.ok().data("count",classify);
     }
 }

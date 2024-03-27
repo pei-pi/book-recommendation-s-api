@@ -42,6 +42,9 @@ public interface BookMapper {
 
     @Insert("insert into books (bookTitle,bookAuthor,bookTags,bookContent,bookSrc,bookCategory,bookDetailCategory,store) VALUES (#{bookTitle}, #{bookAuthor}, #{bookTags}, #{bookContent}, #{bookSrc} ,#{bookCategory}, #{bookDetailCategory}, #{store})")
     public int addBook(Book book);
+
+    @Select("select count(*) from books where bookCategory=#{cateName}")
+    public int searchCateNum(String cateName);
     
 
 }
