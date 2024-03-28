@@ -71,7 +71,6 @@ public class UserController {
     @ApiOperation("添加用户")
     @PostMapping("/insertUser")
     public Result insertUser(@RequestBody User user){
-//        System.out.println(user);
         int i = userMapper.insertUser(user);
         if(i>0){
             return Result.ok();

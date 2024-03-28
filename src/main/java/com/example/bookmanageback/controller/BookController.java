@@ -77,20 +77,6 @@ public class BookController {
         }
     }
 
-    @ApiOperation("查询图书分类")
-    @GetMapping("inquiryClassify")
-    public Result inquiryClassify(){
-        List<Map<Integer,String>> classify = bookMapper.inquiryClassify();
-        return Result.ok().data("classify",classify);
-    }
-
-    @ApiOperation("查询图书详细分类")
-    @GetMapping("inquiryDetailClassify")
-    public Result inquiryDetailClassify(int cateId){
-        List<Map<Integer,String>> detailClassify = bookMapper.inquiryDetailClassify(cateId);
-        return Result.ok().data("detailClassify",detailClassify);
-    }
-
     @ApiOperation("添加图书")
     @PostMapping("/addBook")
     public Result addBook(@RequestBody Book book){
@@ -102,14 +88,5 @@ public class BookController {
         }
     }
 
-    @ApiOperation("统计图表")
-    @GetMapping("/charts")
-    public Result charts(){
-        List<Map<Integer,String>> classify = bookMapper.inquiryClassify();
-        for(Map item : classify){
-            int num = bookMapper.searchCateNum((String) item.get("cateName"));
-            item.put("num",num);
-        }
-        return Result.ok().data("count",classify);
-    }
+
 }

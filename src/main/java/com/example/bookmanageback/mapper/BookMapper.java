@@ -1,12 +1,11 @@
 package com.example.bookmanageback.mapper;
 
 import com.example.bookmanageback.entity.Book;
-import com.example.bookmanageback.entity.Category;
+
 import org.apache.ibatis.annotations.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 @Transactional
@@ -14,8 +13,10 @@ public interface BookMapper {
     //查询所有图书的相关信息
     @Select("select * from books")
     public List<Book> getAllBook();
+
     @Select("select * from books where id = #{bookId}")
     public Book findById(int bookId);
+
     //查询图书数目
     @Select("select Count(*) from books")
     public int getCount();
@@ -23,28 +24,22 @@ public interface BookMapper {
     //查询借阅中的图书数量
     @Select("select Count(*) from borrowBooks where return_state=0")
     public int getBorrowCount();
+
     // 删除图书
     @Delete("delete from books where id = #{bookId}" )
     public int deleteBookById(Integer bookId);
+
     // 批量删除图书
     @Delete("<script>DELETE FROM books WHERE id IN <foreach item='id' collection='bookIds' open='(' separator=',' close=')'>#{id}</foreach></script>")
     public int bantchDelete(@Param("bookIds") List<Integer> bookIds);
+
     //  编辑图书
     @Update("update books set bookTitle=#{bookTitle},bookAuthor=#{bookAuthor},bookTags=#{bookTags},bookContent=#{bookContent},bookSrc=#{bookSrc},bookCategory=#{bookCategory},bookDetailCategory=#{bookDetailCategory},store=#{store} where id = #{id}")
     public int updataBook(Book book);
-    //  查询分类
-    @Select("select cateID,cateName from category group by cateID,cateName")
-    public List<Map<Integer,String>> inquiryClassify();
-
-    //  查询详细分类
-    @Select("select cateId,subCateID,subCateName from category where cateId=#{cateId}")
-    public List<Map<Integer,String>> inquiryDetailClassify(Integer cateId);
 
     @Insert("insert into books (bookTitle,bookAuthor,bookTags,bookContent,bookSrc,bookCategory,bookDetailCategory,store) VALUES (#{bookTitle}, #{bookAuthor}, #{bookTags}, #{bookContent}, #{bookSrc} ,#{bookCategory}, #{bookDetailCategory}, #{store})")
     public int addBook(Book book);
 
     @Select("select count(*) from books where bookCategory=#{cateName}")
     public int searchCateNum(String cateName);
-    
-
 }
