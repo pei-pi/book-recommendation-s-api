@@ -21,10 +21,10 @@ public class UserController {
     public Result login(@RequestBody User user){
         System.out.println(user);
         String token = JwtUtils.generateToken(user.getUsername());
-
         return Result.ok().data("token",token);
-
     }
+
+
 
     @ApiOperation("登录校验查询用户姓名")
     @GetMapping("/info")

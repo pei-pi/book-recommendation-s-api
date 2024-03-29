@@ -24,10 +24,10 @@ public class BookController {
 
     @ApiOperation("根据id查找书籍")
     @GetMapping("/getBookById")
-    public Book getBookById(int bookId){
+    public Result getBookById(int bookId){
         Book book = bookMapper.findById(bookId);
         System.out.println(book);
-        return book;
+        return Result.ok().data("book",book);
     }
 
     @ApiOperation("查询图书数目")
@@ -88,5 +88,10 @@ public class BookController {
         }
     }
 
-
+    @ApiOperation("根据详细分类查询图书")
+    @GetMapping("/getBookByCategory")
+    public Result getBookByCategory(String subCateName){
+        List<Book> book = bookMapper.getBookByCategory(subCateName);
+        return Result.ok().data("books",book);
+    }
 }

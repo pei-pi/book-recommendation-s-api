@@ -36,10 +36,13 @@ public interface BookMapper {
     //  编辑图书
     @Update("update books set bookTitle=#{bookTitle},bookAuthor=#{bookAuthor},bookTags=#{bookTags},bookContent=#{bookContent},bookSrc=#{bookSrc},bookCategory=#{bookCategory},bookDetailCategory=#{bookDetailCategory},store=#{store} where id = #{id}")
     public int updataBook(Book book);
-
+    //   添加图书
     @Insert("insert into books (bookTitle,bookAuthor,bookTags,bookContent,bookSrc,bookCategory,bookDetailCategory,store) VALUES (#{bookTitle}, #{bookAuthor}, #{bookTags}, #{bookContent}, #{bookSrc} ,#{bookCategory}, #{bookDetailCategory}, #{store})")
     public int addBook(Book book);
-
+    //   查询分类书籍数量
     @Select("select count(*) from books where bookCategory=#{cateName}")
     public int searchCateNum(String cateName);
+
+    @Select("select * from books where bookDetailCategory=#{subCateName}")
+    public List<Book> getBookByCategory(String subCateName);
 }
