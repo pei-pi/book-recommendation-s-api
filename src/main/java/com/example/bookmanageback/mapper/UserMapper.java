@@ -22,6 +22,9 @@ public interface UserMapper {
 //  根据id查找用户
     @Select("select * from user where userId = #{userId}")
     public User findById(int userId);
+//   根据用户名查找用户id
+    @Select("select userId from user where username=#{username}")
+    public int findByUsername(String username);
 //  删除用户
     @Delete("delete from user where userId = #{userId}" )
     public int deleteUserById(int userId);

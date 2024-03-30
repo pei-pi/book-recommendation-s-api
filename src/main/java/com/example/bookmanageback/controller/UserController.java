@@ -114,4 +114,10 @@ public class UserController {
     public Result logout(){
         return Result.ok();
     }
+
+    @GetMapping("/findIdByName")
+    public Result findIdByName(String username){
+        int id = userMapper.findByUsername(username);
+        return Result.ok().data("userId",id);
+    }
 }
