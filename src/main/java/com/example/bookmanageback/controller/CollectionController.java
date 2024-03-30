@@ -15,11 +15,13 @@ public class CollectionController {
     private CollectionMapper collectionMapper;
     @Autowired
     private UserMapper userMapper;
+//    判断是否存在收藏信息
     @GetMapping("/ifCollection")
     public Result ifCollection(Integer bookId,String username){
         int i = collectionMapper.ifCollection(bookId,username);
         return Result.ok().data("isCollected",i);
     }
+//     收藏图书
     @GetMapping("/insertCollection")
     public Result insertCollection(Integer bookId,String username){
         int userId = userMapper.findByUsername(username);
@@ -32,5 +34,15 @@ public class CollectionController {
             return Result.error();
         }
     }
-
+//     取消收藏
+    @DeleteMapping("/cancleCollection")
+    public Result cancleCollection(Integer bookId,String username){
+        int userId = userMapper.findByUsername(username);
+        int i = collectionMapper.deleteCollection(bookId,userId);
+        if(i>0){
+            return Result.ok();
+        } else {
+            return Result.error();
+        }
+    }
 }
