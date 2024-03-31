@@ -1,5 +1,4 @@
 package com.example.bookmanageback.controller;
-import com.example.bookmanageback.entity.Collection;
 import com.example.bookmanageback.mapper.CollectionMapper;
 import com.example.bookmanageback.mapper.UserMapper;
 import com.example.bookmanageback.utils.Result;
@@ -16,12 +15,14 @@ public class CollectionController {
     @Autowired
     private UserMapper userMapper;
 //    判断是否存在收藏信息
+    @ApiOperation("查询某用户是否收藏某书籍")
     @GetMapping("/ifCollection")
     public Result ifCollection(Integer bookId,String username){
         int i = collectionMapper.ifCollection(bookId,username);
         return Result.ok().data("isCollected",i);
     }
 //     收藏图书
+    @ApiOperation("插入收藏信息")
     @GetMapping("/insertCollection")
     public Result insertCollection(Integer bookId,String username){
         int userId = userMapper.findByUsername(username);
@@ -35,6 +36,7 @@ public class CollectionController {
         }
     }
 //     取消收藏
+    @ApiOperation("删除收藏信息")
     @DeleteMapping("/cancleCollection")
     public Result cancleCollection(Integer bookId,String username){
         int userId = userMapper.findByUsername(username);
