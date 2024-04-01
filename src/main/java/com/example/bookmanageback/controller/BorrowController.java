@@ -1,20 +1,23 @@
 package com.example.bookmanageback.controller;
+import com.example.bookmanageback.mapper.BookMapper;
 import com.example.bookmanageback.mapper.BorrowMapper;
 import com.example.bookmanageback.mapper.UserMapper;
+import com.example.bookmanageback.entity.BorrowMessage;
 import com.example.bookmanageback.utils.Result;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @RequestMapping("/borrow")
 @RestController
 public class BorrowController {
     @Autowired
     private BorrowMapper borrowMapper;
+    @Autowired
+    private BookMapper bookMapper;
     @Autowired
     private UserMapper userMapper;
     @ApiOperation("查询借阅信息")
@@ -41,8 +44,8 @@ public class BorrowController {
 
     @ApiOperation("审核借阅信息")
     @GetMapping("/checkBorrow")
-    public Result checkBorrow(Integer bookId, Integer userId){
-        int i = borrowMapper.checkBorrow(bookId,userId);
+    public Result checkBorrow(Integer id){
+        int i = borrowMapper.checkBorrow(id);
         return Result.ok();
     }
 
@@ -57,9 +60,20 @@ public class BorrowController {
     }
     @ApiOperation("审核归还信息")
     @GetMapping("/checkBack")
-    public Result checkBack(Integer bookId, Integer userId){
-        int i = borrowMapper.checkBack(bookId,userId);
+    public Result checkBack(Integer id){
+        int i = borrowMapper.checkBack(id);
         return Result.ok();
     }
-
+    @ApiOperation("查询需要审核的借阅信息")
+    @GetMapping("/findBorrowMessage")
+    public Result findBorrowMessage(){
+        List<BorrowMessage> msg = borrowMapper.findBorrowMessage();
+        return Result.ok().data("msg",msg);
+    }
+    @ApiOperation("查询需要审核的归还信息")
+    @GetMapping("/findBackMessage")
+    public Result findBackMessage(){
+        List<BorrowMessage> msg = borrowMapper.findBackMessage();
+        return Result.ok().data("msg",msg);
+    }
 }

@@ -13,6 +13,9 @@ public interface BookMapper {
     //查询所有图书的相关信息
     @Select("select * from books")
     public List<Book> getAllBook();
+    /*根据书名查找id*/
+    @Select("select id from books where bookTitle=#{bookTitle}")
+    public Integer findByName(String bookTitle);
 
     @Select("select * from books where id = #{bookId}")
     public Book findById(int bookId);
@@ -22,7 +25,7 @@ public interface BookMapper {
     public int getCount();
 
     //查询借阅中的图书数量
-    @Select("select Count(*) from borrowBooks where return_state=0")
+    @Select("select Count(*) from borrowBooks where borrowState=2 or borrowState=1 or borrowState=3")
     public int getBorrowCount();
 
     // 删除图书
