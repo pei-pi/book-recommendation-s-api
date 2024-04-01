@@ -1,4 +1,5 @@
 package com.example.bookmanageback.controller;
+import com.example.bookmanageback.entity.UserCollection;
 import com.example.bookmanageback.mapper.CollectionMapper;
 import com.example.bookmanageback.mapper.UserMapper;
 import com.example.bookmanageback.utils.Result;
@@ -6,6 +7,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/collection")
 @RestController
@@ -46,5 +49,12 @@ public class CollectionController {
         } else {
             return Result.error();
         }
+    }
+    @ApiOperation("查询某用户收藏的图书")
+    @GetMapping("/userCollection")
+    public Result userCollection(String username){
+        int userId = userMapper.findByUsername(username);
+        List<UserCollection> collectionList = collectionMapper.userCollection(userId);
+        return Result.ok().data("collectionList",collectionList);
     }
 }

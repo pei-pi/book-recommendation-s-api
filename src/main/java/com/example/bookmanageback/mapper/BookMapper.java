@@ -48,4 +48,5 @@ public interface BookMapper {
 
     @Select("select * from books where bookDetailCategory=#{subCateName}")
     public List<Book> getBookByCategory(String subCateName);
+
 }
