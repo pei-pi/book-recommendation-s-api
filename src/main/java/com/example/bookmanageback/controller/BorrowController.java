@@ -1,4 +1,6 @@
 package com.example.bookmanageback.controller;
+import com.example.bookmanageback.entity.UserBorrow;
+import com.example.bookmanageback.entity.UserCollection;
 import com.example.bookmanageback.mapper.BookMapper;
 import com.example.bookmanageback.mapper.BorrowMapper;
 import com.example.bookmanageback.mapper.UserMapper;
@@ -27,7 +29,8 @@ public class BorrowController {
         int isBorrow = borrowMapper.isBorrow(bookId,userId);
         if(isBorrow == 1){
             int i = borrowMapper.borrowState(bookId,userId);
-            return Result.ok().data("isBorrow",i);
+            String endTime = borrowMapper.findEndTime(bookId,userId);
+            return Result.ok().data("isBorrow",i).data("endTime",endTime);
         }else{
             return Result.ok().data("isBorrow",0);
         }
@@ -38,7 +41,12 @@ public class BorrowController {
     public Result insertBorrow(Integer bookId, String username, Timestamp borrowTime,Timestamp endTime){
         int borrowState = 1;
         int userId = userMapper.findByUsername(username);
-        int i = borrowMapper.insertBorrow(bookId,userId,borrowTime,endTime,borrowState);
+        int count = borrowMapper.findByBookId(bookId,userId);
+        if(count == 0){
+            int i = borrowMapper.insertBorrow(bookId,userId,borrowTime,endTime,borrowState);
+        }else{
+            int i = borrowMapper.updateBorrow(borrowTime,endTime,borrowState,bookId,userId);
+        }
         return Result.ok();
     }
 
@@ -75,5 +83,20 @@ public class BorrowController {
     public Result findBackMessage(){
         List<BorrowMessage> msg = borrowMapper.findBackMessage();
         return Result.ok().data("msg",msg);
+    }
+
+    @ApiOperation("获取用户历史借阅")
+    @GetMapping("/userBorrowbooks")
+    public Result userBorrowbooks(String username){
+        int userId = userMapper.findByUsername(username);
+        List<UserBorrow> borrowBooksList = borrowMapper.userBorrowbooks(userId);
+        return Result.ok().data("borrowBooksList",borrowBooksList);
+    }
+    @ApiOperation("修改截止日期")
+    @GetMapping("/changeEndTime")
+    public Result changeEndTime(Timestamp endTime,Integer bookId,String username){
+        int userId = userMapper.findByUsername(username);
+        int i = borrowMapper.updateEndTime(endTime,bookId,userId);
+        return Result.ok();
     }
 }
