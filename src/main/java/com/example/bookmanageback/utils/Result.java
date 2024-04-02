@@ -58,6 +58,13 @@ public class Result {
         r.setMessage("失败");
         return r;
     }
+    public static Result noStore(){
+        Result r = new Result();
+        r.setSuccess(false);
+        r.setCode(30000);
+        r.setMessage("图书暂无余量");
+        return r;
+    }
 
     public Result data(String key,Object value){
         this.data.put(key,value);

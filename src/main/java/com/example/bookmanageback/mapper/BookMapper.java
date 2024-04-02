@@ -49,4 +49,13 @@ public interface BookMapper {
     @Select("select * from books where bookDetailCategory=#{subCateName}")
     public List<Book> getBookByCategory(String subCateName);
 
+    /*根据图书id查找余量*/
+    @Select("select store from books where id=#{bookId}")
+    public int store(Integer bookId);
+    /*图书余量减一*/
+    @Update("update books set store=store-1 where id=#{bookId}")
+    public void decount(Integer bookId);
+    /*图书余量加一*/
+    @Update("update books set store=store+1 where id=(select bookId from borrowbooks where id=#{id})")
+    public void addcount(Integer id);
 }

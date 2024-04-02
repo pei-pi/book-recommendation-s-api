@@ -39,15 +39,23 @@ public class BorrowController {
     @ApiOperation("插入借阅信息")
     @GetMapping("/insertBorrow")
     public Result insertBorrow(Integer bookId, String username, Timestamp borrowTime,Timestamp endTime){
-        int borrowState = 1;
-        int userId = userMapper.findByUsername(username);
-        int count = borrowMapper.findByBookId(bookId,userId);
-        if(count == 0){
-            int i = borrowMapper.insertBorrow(bookId,userId,borrowTime,endTime,borrowState);
+        int store = bookMapper.store(bookId);
+        if(store==0){
+            System.out.println(store);
+            return Result.noStore();
         }else{
-            int i = borrowMapper.updateBorrow(borrowTime,endTime,borrowState,bookId,userId);
+            int borrowState = 1;
+            int userId = userMapper.findByUsername(username);
+            int count = borrowMapper.findByBookId(bookId,userId);
+            int i;
+            if(count == 0){
+                i = borrowMapper.insertBorrow(bookId,userId,borrowTime,endTime,borrowState);
+            }else{
+                i = borrowMapper.updateBorrow(borrowTime,endTime,borrowState,bookId,userId);
+            }
+            bookMapper.decount(bookId);
+            return Result.ok().data("i",i);
         }
-        return Result.ok();
     }
 
     @ApiOperation("审核借阅信息")
@@ -70,6 +78,7 @@ public class BorrowController {
     @GetMapping("/checkBack")
     public Result checkBack(Integer id){
         int i = borrowMapper.checkBack(id);
+        bookMapper.addcount(id);
         return Result.ok();
     }
     @ApiOperation("查询需要审核的借阅信息")
