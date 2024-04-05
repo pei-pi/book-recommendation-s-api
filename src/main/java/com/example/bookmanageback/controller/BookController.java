@@ -92,4 +92,14 @@ public class BookController {
         List<Book> book = bookMapper.getBookByCategory(subCateName);
         return Result.ok().data("books",book);
     }
+
+    @ApiOperation("按降序获取图书")
+    @GetMapping("/getNewBook")
+    public Result getNewBook(Integer begin,Integer num){
+        List<Book> books = bookMapper.getNewBook(begin,num);
+        return Result.ok().data("books",books);
+    }
+
+
+
 }

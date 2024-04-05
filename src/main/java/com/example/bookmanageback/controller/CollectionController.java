@@ -2,6 +2,7 @@ package com.example.bookmanageback.controller;
 import com.example.bookmanageback.entity.UserCollection;
 import com.example.bookmanageback.mapper.CollectionMapper;
 import com.example.bookmanageback.mapper.UserMapper;
+import com.example.bookmanageback.mapper.ActivityMapper;
 import com.example.bookmanageback.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +16,8 @@ import java.util.List;
 public class CollectionController {
     @Autowired
     private CollectionMapper collectionMapper;
+    @Autowired
+    private ActivityMapper activityMapper;
     @Autowired
     private UserMapper userMapper;
 //    判断是否存在收藏信息
@@ -32,6 +35,7 @@ public class CollectionController {
         java.util.Date date = new java.util.Date(); // 获取当前时间
         java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime()); // 转换为Timestamp
         int i = collectionMapper.insertCollection(bookId,userId,timestamp);
+        int j = activityMapper.insertActivity(userId,bookId,2,timestamp);
         if(i>0){
             return Result.ok();
         } else {

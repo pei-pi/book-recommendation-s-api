@@ -58,4 +58,8 @@ public interface BookMapper {
     /*图书余量加一*/
     @Update("update books set store=store+1 where id=(select bookId from borrowbooks where id=#{id})")
     public void addcount(Integer id);
+
+    @Select("select * from books order by id desc limit #{begin},#{num}")
+    public List<Book> getNewBook(Integer begin,Integer num);
+
 }
