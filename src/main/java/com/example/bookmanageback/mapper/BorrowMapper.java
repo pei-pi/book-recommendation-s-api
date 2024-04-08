@@ -49,6 +49,8 @@ public interface BorrowMapper {
     /*更新借阅信息*/
     @Update("update borrowbooks set borrowTime=#{borrowTime},endTime=#{endTime},borrowState=#{borrowState},borrowTimes=borrowTimes+1 where bookId=#{bookId} and userId=#{userId}")
     public int updateBorrow(Timestamp borrowTime,Timestamp endTime,Integer borrowState,Integer bookId,Integer userId);
+    /*更新归还时间*/
     @Update("update borrowbooks set endTime=#{endTime} where bookId=#{bookId} and userId=#{userId}")
     public int updateEndTime(Timestamp endTime,Integer bookId,Integer userId);
+
 }

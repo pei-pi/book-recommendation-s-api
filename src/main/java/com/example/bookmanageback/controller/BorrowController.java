@@ -1,6 +1,7 @@
 package com.example.bookmanageback.controller;
 import com.example.bookmanageback.entity.UserBorrow;
 import com.example.bookmanageback.entity.UserCollection;
+import com.example.bookmanageback.mapper.ActivityMapper;
 import com.example.bookmanageback.mapper.BookMapper;
 import com.example.bookmanageback.mapper.BorrowMapper;
 import com.example.bookmanageback.mapper.UserMapper;
@@ -21,6 +22,8 @@ public class BorrowController {
     @Autowired
     private BookMapper bookMapper;
     @Autowired
+    private ActivityMapper activityMapper;
+    @Autowired
     private UserMapper userMapper;
     @ApiOperation("查询借阅信息")
     @GetMapping("/isBorrow")
@@ -40,12 +43,15 @@ public class BorrowController {
     @GetMapping("/insertBorrow")
     public Result insertBorrow(Integer bookId, String username, Timestamp borrowTime,Timestamp endTime){
         int store = bookMapper.store(bookId);
+        int userId = userMapper.findByUsername(username);
+        java.util.Date date = new java.util.Date(); // 获取当前时间
+        java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
+        activityMapper.insertActivity(userId,bookId,3,timestamp);
         if(store==0){
             System.out.println(store);
             return Result.noStore();
         }else{
             int borrowState = 1;
-            int userId = userMapper.findByUsername(username);
             int count = borrowMapper.findByBookId(bookId,userId);
             int i;
             if(count == 0){

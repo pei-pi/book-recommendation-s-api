@@ -35,7 +35,7 @@ public class CollectionController {
         java.util.Date date = new java.util.Date(); // 获取当前时间
         java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime()); // 转换为Timestamp
         int i = collectionMapper.insertCollection(bookId,userId,timestamp);
-        int j = activityMapper.insertActivity(userId,bookId,2,timestamp);
+        activityMapper.insertActivity(userId,bookId,2,timestamp);
         if(i>0){
             return Result.ok();
         } else {

@@ -62,4 +62,5 @@ public interface BookMapper {
     @Select("select * from books order by id desc limit #{begin},#{num}")
     public List<Book> getNewBook(Integer begin,Integer num);
 
+
 }

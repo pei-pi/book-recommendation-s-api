@@ -2,7 +2,6 @@ package com.example.bookmanageback.controller;
 import com.example.bookmanageback.entity.Book;
 import com.example.bookmanageback.mapper.BookMapper;
 import com.example.bookmanageback.utils.Result;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -99,7 +98,4 @@ public class BookController {
         List<Book> books = bookMapper.getNewBook(begin,num);
         return Result.ok().data("books",books);
     }
-
-
-
 }
